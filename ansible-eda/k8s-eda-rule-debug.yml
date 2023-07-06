@@ -1,0 +1,12 @@
+- name: Listen for newly added ConfigMap resources
+  hosts: all
+  sources:
+    - sabre1041.eda.k8s:
+        api_version: v1
+        kind: ConfigMap
+        namespace: k8seda
+  rules:
+    - name: Notify
+      condition: event.type == "ADDED"
+      action:
+        debug:

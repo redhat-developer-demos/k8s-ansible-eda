@@ -1,0 +1,49 @@
+= Anisble EDA Kubernetes
+
+This example uses Ansible EDA listening for any addition of a ConfigMap on the Kubernetes cluster, and sending an email with the information of the addition.
+In this case, it's simple, but it could be for example restarting the Deployment to get the changes into the Pod.
+
+== Deployment
+
+To deploy, first of all create a new namespace named `k8seda`:
+
+[source, bash]
+----
+kubectl create namespace k8seda
+----
+
+And move to `k8seda` namespace:
+
+[source, bash]
+----
+kubens k8seda
+----
+
+Then, go to `kubernetes` directory and deploy MailHog mail service:
+
+[source, bash]
+----
+kubectl apply -f 1-mailhog-deployment.yml
+----
+
+INFO: This `yml` contains an OpenShift Route to access the service from outside the cluster. In the case of minikube/kind/..., you can skip that and use any other feature provided to access the service like `port-forward`.
+
+Finally, deploy the Ansible Eda container:
+
+[source, bash]
+----
+kubectl apply -f 2-eda-deployment.yml
+----
+
+== Demo
+
+When everything is up and running, create a new ConfigMap:
+
+[source, bash]
+----
+kubectl create configmap -n k8seda eda-example --from-literal=message="Kubernetes Meets Event-Driven Ansible"
+----
+
+Now, you can inspect the logs of the Ansible EDA Pod, and you'll notice that the event has been captured and processed.
+
+Moreover, if you access the MailHog UI (the route points directly to the UI), you'll enter the Mail console to validate that the email was sent.

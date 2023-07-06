@@ -1,0 +1,11 @@
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Send email with a ConfigMap change
+      community.general.mail:
+        host: mailer
+        port: 1025
+        from: YOUREMAIL@example.com
+        subject: New ConfigMap provisioned.
+        body: ConfigMap in namespace '{{ ansible_eda.event.resource.metadata.namespace }}' with name '{{ ansible_eda.event.resource.metadata.name }} provisioned.
+      delegate_to: localhost
