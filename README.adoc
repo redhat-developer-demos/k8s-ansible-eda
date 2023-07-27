@@ -1,4 +1,4 @@
-= Anisble EDA Kubernetes
+= Ansible EDA Kubernetes
 
 This example uses Ansible EDA listening for any addition of a ConfigMap on the Kubernetes cluster, and sending an email with the information of the addition.
 In this case, it's simple, but it could be for example restarting the Deployment to get the changes into the Pod.
