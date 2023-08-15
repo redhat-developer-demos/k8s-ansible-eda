@@ -4,10 +4,10 @@
     - sabre1041.eda.k8s:
         api_version: v1
         kind: ConfigMap
-        namespace: default
+        namespace: k8seda
   rules:
     - name: Execute Playbook
       condition: event.type == "ADDED"
       action:
         run_playbook:
-          name: k8s-eda-playbook-mail.yml  
+          name: k8s-eda-playbook-mail.yml
